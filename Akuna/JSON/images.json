@@ -1,0 +1,19 @@
+{
+	"mainPage":
+		[
+			{"imageId":"1","source":"C:/Users/or212/source/repos/Akuna/Images/or1.jpg","category":"main","type":"none","color":"none","description":"Main wide picture"},
+			{"imageId":"2","source":"C:/Users/or212/source/repos/Akuna/Images/boys.jpg","category":"boys section","type":"none","color":"none","description":"Boys section picture"},
+			{"imageId":"3","source":"C:/Users/or212/source/repos/Akuna/Images/girls.jpg","category":"girls section","type":"none","color":"none","description":"Girls section picture"},
+			{"imageId":"4","source":"C:/Users/or212/source/repos/Akuna/Images/women.jpg","category":"women section","type":"none","color":"none","description":"Women section picture"}
+		],
+	"boysPage":
+		[
+			{"imageId":"5","source":"C:/Users/or212/source/repos/Akuna/Images/girls.jpg","category":"boys","type":"t-shirt","color":"black","description":"Knitted black t-shirt with back print","price":"20$","total-quantity":"5","sizes":[{"S":"1","M":"2","L":"2","XL":"0"}]},
+			{"imageId":"6","source":"C:/Users/or212/source/repos/Akuna/Images/boys.jpg","category":"boys","type":"shirt","color":"white","description":"White oxford shirt","price":"20$","total-quantity":"5","sizes":[{"S":"1","M":"2","L":"2","XL":"0"}]},
+			{"imageId":"7","source":"C:/Users/or212/source/repos/Akuna/Images/or12.jpg","category":"boys","type":"t-shirt","color":"white","description":"white overline t-shirt","price":"20$","total-quantity":"5","sizes":[{"S":"1","M":"2","L":"2","XL":"0"}]},
+			{"imageId":"8","source":"C:/Users/or212/source/repos/Akuna/Images/women.jpg","category":"boys","type":"shirt","color":"none","description":"White oxford shirt","price":"20$","total-quantity":"5","sizes":[{"S":"1","M":"2","L":"2","XL":"0"}]},
+			{"imageId":"9","source":"C:/Users/or212/source/repos/Akuna/Images/hjhj.jpg","category":"boys","type":"t-shirt","color":"none","description":"white overline t-shirt","price":"20$","total-quantity":"5","sizes":[{"S":"1","M":"2","L":"2","XL":"0"}]},
+			{"imageId":"10","source":"C:/Users/or212/source/repos/Akuna/Images/asd.jpg","category":"boys","type":"shirt","color":"none","description":"White oxford shirt","price":"20$","total-quantity":"5","sizes":[{"S":"1","M":"2","L":"2","XL":"0"}]}
+	
+		]
+}

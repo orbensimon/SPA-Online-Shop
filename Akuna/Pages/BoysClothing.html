@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Caveat|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <style>
+        /*ul.actionBar {
+            list-style-type: none;
+            margin-top: 10px;
+            padding: 0;
+            background-color: lightgray;
+            overflow: hidden;
+            border: 1px solid white;
+        }
+
+            ul.actionBar li {
+                float: right;
+            }
+
+                ul.actionBar li a {
+                    display: block;
+                    text-decoration: none;
+                    padding: 16px 20px;
+                    border-right: 1px solid white;
+                    text-align: center;
+                    color: black;
+                }
+
+                    ul.actionBar li a:hover {
+                        cursor: pointer;
+                    }*/
+        div.controlPanel {
+            position: relative;
+            display: inline-block;
+            margin-top: 10px;
+        }
+            div.controlPanel button {
+                border-radius: 2%;
+                z-index: 3;
+                color: white;
+                border: 1px solid white;
+                width: 130px;
+                height: 25px;
+                background-color: black;
+            }
+        div.controlPanel button:hover {
+            cursor: pointer;
+            background-color: white;
+            color: black;
+            border: 1px solid black;
+        }
+        div.dropDown {
+            position: absolute;
+            background-color: rgba(0,0,0,0.1);
+            min-width: 160px;
+            overflow: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        div.controlPanel div.dropDown ul li {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        div.row {
+            margin-top: 20px;
+            display: grid;
+            align-content: center;
+            justify-content: space-around;
+            grid-column-gap: 30px;
+            grid-template-columns: 270px 270px 270px;
+        }
+        a img.imgcol {
+            /*padding-top: 20px;
+                position: relative;
+                left: 33.33%;*/
+            max-width: 270px;
+            width: 270px;
+            height: 270px;
+            max-height: 270px;
+            width: 100%;
+        }
+        a img.imgcol:hover{
+            cursor: pointer;
+        }
+        span {
+            font-family: 'Caveat', cursive;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="controlPanel">
+        <button ng-click="showSortingOptions()" id="sortBtn" value="Sort">Sort</button>
+        <div class="dropDown" ng-show="sortClicked">
+            <ul>
+                <li><button>Price High To Low</button></li>
+                <li><button>Price Low To High</button></li>
+            </ul>
+        </div>
+        <button ng-click="productTypeOptions()" id="productTypeBtn"> Product Type </button>
+        <div class="dropDown">
+            <ul ng-show="productClicked">
+                <li ng-click="productRefineFunction($index)" ng-repeat="prodType in boysImages | filterProduct:boysImages"><button>{{prodType}}</button></li>
+            </ul>
+        </div>
+    </div>
+    <!--<ul class="actionBar">
+        <li class="floatRight"><a>Sort</a></li>
+        <li class="floatRight"><a>Product Type</a></li>
+        <li class="floatRight"><a>Product Type</a></li>
+        <li class="floatRight"><a>Color</a></li>
+        <li class="floatRight"><a>Size</a></li>
+    </ul>-->
+    <div ng-repeat="x in [].constructor(numberOfCol) track by $index" class="row">
+        <div ng-repeat="img in boysImages" class="col">
+            <a><img class="imgcol" ng-src="{{img.source}}"/></a>
+            <span>{{img.description}}</span>
+            <b><span style="padding-left:5px;font-size:25px">{{img.price}}</span></b>
+        </div>
+    </div>
+</body>
+</html>

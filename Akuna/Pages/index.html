@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Caveat|Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        ul.navbar {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            overflow: hidden;
+            border: 1px solid white;
+        }
+
+            ul.navbar li {
+                float: left;
+            }
+
+                ul.navbar li a {
+                    display: block;
+                    text-decoration: none;
+                    padding: 16px 20px;
+                    border-right: 1px solid white;
+                    text-align: center;
+                    color: white;
+                }
+
+                ul.navbar li.floatright {
+                    float: right;
+                    border-left: 1px solid white;
+                }
+
+        @media screen and (max-width: 600px) {
+            ul .navbar li.floatright, ul.navbar li {
+                float: none;
+            }
+
+            .rowcontact {
+                display: grid;
+                grid-template-columns: 200px;
+                justify-content: center;
+            }
+
+            .row {
+                display: grid;
+                grid-template-columns: 300px;
+                justify-content: center;
+            }
+
+            a img.imgcol {
+                max-width: 300px;
+            }
+        }
+    </style>
+    <script>
+        var app = angular.module('myApp', ["ngRoute"]);
+
+        app.config(function ($routeProvider) {
+
+            $routeProvider
+                .when("/boys", {
+                    templateUrl: "BoysClothing.html",
+                    controller: "boysCtrl"
+                })
+                .when("/girls", {
+                    templateUrl: "GirlsClothing.html",
+                    controller: "girlsCtrl"
+                })
+                .when("/women", {
+                    templateUrl: "WomenClothing.html",
+                    controller: "womenCtrl"
+                })
+                .when("/cart", {
+                    templateUrl: "Cart.html",
+                    controller: "cartCtrl"
+                })
+                .when("/account", {
+                    templateUrl: "Account.html",
+                    controller: "accountCtrl"
+                })
+                .otherwise({
+                    templateUrl: "Main.html",
+                    controller: "myCtrl"
+                });
+
+
+
+        });
+        app.factory('jsonImages', function ($http) {
+            var pagePhotos = {};
+            pagePhotos.getPhotos = function () {
+                return $http.get('../JSON/images.json').then(function (data) {
+                    return data.data;
+                });
+
+            };
+            return pagePhotos;
+        });
+
+        app.filter('roundUp', function () {
+            return function (value) {
+                return Math.ceil(value);
+            };
+        });
+
+        app.filter('filterProduct', function () {
+            return function (images) {
+                var productsType = [];
+                for (indexObj in images) {
+                    if (productsType.indexOf(images[indexObj].type) == -1)
+                        productsType.push(images[indexObj].type);
+                }
+                return productsType;
+            };
+
+        });
+
+        app.controller('myCtrl', function ($scope, $http, jsonImages) {
+            jsonImages.getPhotos().then(function (data) {
+                $scope.dataImages = data;
+                $scope.mainPhoto = $scope.dataImages.mainPage[0].source;
+                $scope.firstPhoto = $scope.dataImages.mainPage[1].source;
+                $scope.secPhoto = $scope.dataImages.mainPage[2].source;
+                $scope.thirdPhoto = $scope.dataImages.mainPage[3].source;
+
+            });
+           
+
+        });
+        app.controller('boysCtrl', function ($scope, $http,$filter, jsonImages) {
+            jsonImages.getPhotos().then(function (data) {
+                $scope.boysImagesData = data;
+                $scope.numberOfImages = $scope.boysImagesData.boysPage.length;
+                $scope.numberOfCol = $filter('roundUp')($scope.boysImagesData.boysPage.length / 3)
+                $scope.boysImages = $scope.boysImagesData.boysPage;
+                //$scope.productTypes = $filter('filterProduct')($scope.boysImagesData.boysPage);
+            });
+            $scope.productClicked = false;
+            $scope.sortClicked = false;
+            $scope.showSortingOptions = function () {
+                $scope.sortClicked = !($scope.sortClicked);
+                $scope.productClicked = false;
+            }
+            $scope.productTypeOptions = function () {
+                $scope.productClicked = !($scope.productClicked);
+                $scope.sortClicked = false;
+            }
+
+        }); app.controller('girlsCtrl', function ($scope, $http, jsonImages) {
+            $scope.number = 3;
+
+        }); app.controller('womenCtrl', function ($scope, $http, jsonImages) {
+            $scope.number = 3;
+
+        });
+        app.controller('cartCtrl', function ($scope, $http) {
+            $scope.number = 3;
+
+        });
+        app.controller('accountCtrl', function ($scope, $http) {
+            $scope.number = 3;
+
+        });
+
+
+
+    </script>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+    <ul class="navbar">
+        <li><a href="#!home"><i class="fa fa-fw fa-home"></i></a></li>
+        <li><a href="#!girls">Girls</a></li>
+        <li><a href="#!boys">Boys</a></li>
+        <li><a href="#!women">Women</a></li>
+        <li class="floatright"><a href="#!cart"><i class="fa fa-address-book-o"></i></a></li>
+        <li class="floatright"><a href="#!account"><i class="fa fa-shopping-cart"></i></a></li>
+    </ul>
+    <div ng-view>
+
+
+
+    </div>
+
+</body>
+</html>
