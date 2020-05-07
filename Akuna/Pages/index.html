@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -106,6 +106,25 @@
             };
             return pagePhotos;
         });
+        app.factory('highToLow', function () {
+            var orderdPhoto = {};
+            orderdPhoto.getOrderdPhotos = function (data, order) {
+                var sorted;
+                if (order == 'low') {
+                    sorted = data.sort(function (a, b) {
+                        return ((a.price < b.price) ? -1 : ((a.price > b.price) ? 1 : 0));
+                    });
+                }
+                else {
+                    sorted = data.sort(function (a, b) {
+                        return ((a.price > b.price) ? -1 : ((a.price < b.price) ? 1 : 0));
+                    });
+                }
+                return sorted;
+            };
+            return orderdPhoto;
+
+        })
 
         app.filter('roundUp', function () {
             return function (value) {
@@ -125,6 +144,15 @@
 
         });
 
+        app.filter('range', function () {
+            return function (list, rangeNum) {
+                rangeNum = parseInt(rangeNum, 10);
+                for (var i = 0; i < rangeNum; i++)
+                    list.push(i);
+            };
+            return list;
+        });
+
         app.controller('myCtrl', function ($scope, $http, jsonImages) {
             jsonImages.getPhotos().then(function (data) {
                 $scope.dataImages = data;
@@ -134,12 +162,12 @@
                 $scope.thirdPhoto = $scope.dataImages.mainPage[3].source;
 
             });
-           
+
 
         });
-        app.controller('boysCtrl', function ($scope, $http,$filter, jsonImages) {
+        app.controller('boysCtrl', function ($scope, $http, $filter, jsonImages, highToLow) {
             jsonImages.getPhotos().then(function (data) {
-                $scope.boysImagesData = data;
+                $scope.boysImagesData = data; // Original JSON
                 $scope.numberOfImages = $scope.boysImagesData.boysPage.length;
                 $scope.numberOfCol = $filter('roundUp')($scope.boysImagesData.boysPage.length / 3)
                 $scope.boysImages = $scope.boysImagesData.boysPage;
@@ -155,11 +183,16 @@
                 $scope.productClicked = !($scope.productClicked);
                 $scope.sortClicked = false;
             }
+            $scope.priceOrder = function (order) {
+                $scope.boysImages = highToLow.getOrderdPhotos($scope.boysImages, order);
+            }
 
-        }); app.controller('girlsCtrl', function ($scope, $http, jsonImages) {
+        });
+        app.controller('girlsCtrl', function ($scope, $http, jsonImages) {
             $scope.number = 3;
 
-        }); app.controller('womenCtrl', function ($scope, $http, jsonImages) {
+        });
+        app.controller('womenCtrl', function ($scope, $http, jsonImages) {
             $scope.number = 3;
 
         });
