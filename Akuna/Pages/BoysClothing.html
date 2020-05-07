@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -102,8 +102,8 @@
         <button ng-click="showSortingOptions()" id="sortBtn" value="Sort">Sort</button>
         <div class="dropDown" ng-show="sortClicked">
             <ul>
-                <li><button>Price High To Low</button></li>
-                <li><button>Price Low To High</button></li>
+                <li><button ng-click="priceOrder('high')">Price High To Low</button></li>
+                <li><button ng-click="priceOrder('low')">Price Low To High</button></li>
             </ul>
         </div>
         <button ng-click="productTypeOptions()" id="productTypeBtn"> Product Type </button>
@@ -120,11 +120,19 @@
         <li class="floatRight"><a>Color</a></li>
         <li class="floatRight"><a>Size</a></li>
     </ul>-->
-    <div ng-repeat="x in [].constructor(numberOfCol) track by $index" class="row">
-        <div ng-repeat="img in boysImages" class="col">
+    <!--<div ng-repeat="x in [].constructor(numberOfCol) track by $index" class="row">
+        <div ng-repeat="img in boysImages.slice($index,$index+3) track by $index" class="col">
+            <h1>{{$index}}</h1>
             <a><img class="imgcol" ng-src="{{img.source}}"/></a>
             <span>{{img.description}}</span>
             <b><span style="padding-left:5px;font-size:25px">{{img.price}}</span></b>
+        </div>
+    </div>-->
+    <div ng-repeat="img in boysImages track by $index" ng-if="$index % 3 == 0" class="row">
+        <div ng-repeat="i in [$index,$index+1,$index+2] track by $index" class="col">
+            <a><img class="imgcol" ng-src="{{boysImages[i].source}}"/></a>
+            <span>{{boysImages[i].description}}</span>
+            <b><span style="padding-left:5px;font-size:25px">{{boysImages[i].price + '$'}}</span></b>
         </div>
     </div>
 </body>
